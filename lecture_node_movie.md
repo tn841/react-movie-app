@@ -10,3 +10,6 @@
 3. MainImageComponent 만들기
 4. Grid Card Component 만들기
 5. Load More Function 만들기
+
+- - -
+## #5. Grid Card Component 
