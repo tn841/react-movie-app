@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { API_URL, API_KEY, IMAGE_BASE_URL } from '../../Config';
 import MainImage from '../LandingPage/Sections/MainImage';
 import MovieInfo from './Sections/MovieInfo';
+import {Row} from 'antd';
+import { FaGripHorizontal } from 'react-icons/fa';
+import GridCards from '../commons/GridCards';
 
 function MovieDetail(props) {
 
     const [Movie, setMovie] = useState([])
+    const [Actor, setActor] = useState([])
+    const [ActorToggle, setActorToggle] = useState(null)
     let movieId = props.match.params.movieId;
 
     useEffect(() => {
@@ -15,13 +20,25 @@ function MovieDetail(props) {
         fetch(endpointInfo)
             .then(res => res.json())
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 setMovie(res)
-            })    
-        return () => {
+            })
             
-        }
+        fetch(endpointCrew)
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            setActor(res.cast)
+        })
+
+        setActorToggle(false);
+        
     }, [])
+
+    const handleToggleBtn = () => {
+        console.log(ActorToggle);
+        setActorToggle(!ActorToggle)
+    }
 
     return (
         <div>
@@ -41,9 +58,25 @@ function MovieDetail(props) {
 
                 {/* Actors Grid */}
                 <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem'}}>
-                    <button> Toggle Actor View</button>
+                    <button onClick={handleToggleBtn}> Toggle Actor View</button>
                 </div>
-            </div>
+
+                {ActorToggle &&
+                <Row gutter={[16,16]}>
+                    {Actor && Actor.map((actor, index)=> (
+                        <React.Fragment key={index}>
+                            {/* <p>{`${actor}`}</p> */}
+                            <GridCards
+                                image={actor.profile_path ? 
+                                `${IMAGE_BASE_URL}w500${actor.profile_path}` : null}
+                                actorName={actor.name}
+                            />
+                        </React.Fragment>
+                    ))}
+                </Row>
+
+                }
+                            </div>
         </div>
     )
 }
