@@ -5,6 +5,7 @@ import MovieInfo from './Sections/MovieInfo';
 import {Row} from 'antd';
 import { FaGripHorizontal } from 'react-icons/fa';
 import GridCards from '../commons/GridCards';
+import Favorite from './Sections/Favorite'
 
 function MovieDetail(props) {
 
@@ -27,7 +28,7 @@ function MovieDetail(props) {
         fetch(endpointCrew)
         .then(res => res.json())
         .then(res => {
-            console.log(res)
+            // console.log(res)
             setActor(res.cast)
         })
 
@@ -36,7 +37,7 @@ function MovieDetail(props) {
     }, [])
 
     const handleToggleBtn = () => {
-        console.log(ActorToggle);
+        // console.log(ActorToggle);
         setActorToggle(!ActorToggle)
     }
 
@@ -50,6 +51,14 @@ function MovieDetail(props) {
             />
             {/* Body */}
             <div style={{ width: '85%', margin: '1rem auto'}}>
+                <div style={{display:'flex', justifyContent: 'flex-end'}}>
+                    <Favorite
+                        movieInfo={Movie}
+                        movieId={movieId}
+                        userFrom={localStorage.getItem('uerId')}
+                    />
+                </div>
+
                 {/* Movie Info */}
                 <MovieInfo 
                     movie={Movie}
