@@ -15,4 +15,24 @@ router.post('/favoriteNumber', (req, res) => {
         })
 });
 
+router.post('/favorited', (req, res) => {
+    let m_id = req.body.movieId
+    let user_id = req.body.userFrom
+
+    // mongoDB에서 내가 favorite 했는지 확인
+    Favorite.find({"movieId": m_id, '_id': user_id})
+        .exec((err, info) => {
+            console.log(info);
+            if(err) return res.status(400).send(err)
+            
+            let result = false;
+
+            if(info.length > 0){
+                result = true
+            }
+            res.status(200).json({success: true, favorited: result})
+            
+        })
+});
+
 module.exports = router;
