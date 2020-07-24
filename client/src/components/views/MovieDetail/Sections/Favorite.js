@@ -5,7 +5,7 @@ import { Button } from 'antd'
 function Favorite(props) {
     const movieId = props.movieId
     const userFrom = props.userFrom
-    const movieTitle = props.movieInfo.movieTitle
+    const movieTitle = props.movieInfo.original_title
     const moviePost = props.movieInfo.backdrop_path
     const movieRunTime = props.movieInfo.runtime
     

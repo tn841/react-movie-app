@@ -15,7 +15,7 @@ const favoriteSchema = Schema({
     moviePost: {
         type: String
     },
-    moviewRunTime: {
+    movieRunTime: {
         type: String
     },
     
