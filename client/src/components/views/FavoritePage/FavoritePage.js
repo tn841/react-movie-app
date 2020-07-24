@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './favorite.css'
 import Axios from 'axios'
+import {Popover} from 'antd'
+import {IMAGE_BASE_URL} from '../../Config'
 
 function FavoritePage(props) {
     const userFrom = localStorage.getItem('uerId')
@@ -17,6 +19,38 @@ function FavoritePage(props) {
             }
         })
     }, [])
+    const handleRemoveBtn = (movieId, userFrom) => {
+        // console.log(FavoriteInfos, movieId)    
+
+        Axios.post('/api/favorite/remove', {movieId, userFrom})
+        .then( res => {
+            if(res.data.success){
+                console.log(res.data)
+                setFavoriteInfos(FavoriteInfos.filter( (favorite, idx) => favorite.movieId !== movieId))
+            } else {
+                alert('Fail to delete Favorite')
+            }
+        })
+    }
+    const renderCards = FavoriteInfos.map( (favorite, idx) => {
+
+        const content = (
+            <div>
+                {favorite.moviePost ? 
+                    <img src={`${IMAGE_BASE_URL}w500${favorite.moviePost}`}/> : 'no image'   
+            }
+            </div>
+        )
+
+        return (
+        <tr key={idx} >
+            <Popover content={content} title={`${favorite.movieTitle}`}>
+                <td>{favorite.movieTitle}</td>
+            </Popover>
+            <td>{favorite.movieRunTime} mins</td>
+            <td><button onClick={() => handleRemoveBtn(favorite.movieId, favorite.userFrom)}>Remove</button></td>
+        </tr>)
+    })
 
     return (
         <div style={{ width: '85%', margin: '3rem auto'}}>
@@ -31,13 +65,7 @@ function FavoritePage(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {FavoriteInfos && FavoriteInfos.map( (favorite, idx) => (
-                        <tr key={idx}>
-                            <td>{favorite.movieTitle}</td>
-                            <td>{favorite.movieRunTime} mins</td>
-                            <td><button>Remove</button></td>
-                        </tr>
-                    ))}
+                    {renderCards}
                 </tbody>
             </table>
             
