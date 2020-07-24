@@ -20,7 +20,7 @@ router.post('/favorited', (req, res) => {
     let user_id = req.body.userFrom
 
     // mongoDB에서 내가 favorite 했는지 확인
-    Favorite.find({"movieId": m_id, '_id': user_id})
+    Favorite.find({"movieId": m_id, 'userFrom': user_id})
         .exec((err, info) => {
             console.log(info);
             if(err) return res.status(400).send(err)
@@ -34,5 +34,24 @@ router.post('/favorited', (req, res) => {
             
         })
 });
+
+router.post('/add', (req, res) => {
+    const favorite = new Favorite(req.body);
+    favorite.save((err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+            success: true,
+            doc
+        });
+    });
+})
+
+router.post('/remove', (req, res) => {
+    Favorite.findOneAndDelete({"movieId": req.body.movieId, 'userFrom': req.body.userFrom})
+    .exec((err, doc) => {
+        if(err) return res.json({success: false, err})
+        return res.status(200).json({success: true, doc})
+    })
+})
 
 module.exports = router;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
+import { Button } from 'antd'
 
 function Favorite(props) {
     const movieId = props.movieId
@@ -45,10 +46,47 @@ function Favorite(props) {
         }
     }, [])
 
+    const onClickFavorite = () => {
+        if(Favorited){
+            console.log('remove fav')
+            Axios.post('/api/favorite/remove', {movieId, userFrom})
+            .then(res => {
+                console.log(res)
+                if(res.data.success){
+                    setFavorited(false);
+                    setFavoriteNumver(FavoriteNumber - 1)
+                } else {
+                    alert('Fail to remove Favorite')
+                }
+                
+            })
+        } else {
+            console.log('add fav')
+            Axios.post('/api/favorite/add', 
+            {
+                movieId
+                ,userFrom
+                ,movieTitle
+                ,moviePost
+                ,movieRunTime
+            })
+            .then( res => {
+                console.log(res);
+                if(res.data.success){
+                    setFavorited(true)
+                    setFavoriteNumver(FavoriteNumber + 1)
+                } else {
+                    alert('Fail to add Favorite')
+                }
+                
+            })
+        }
+    }
+
     return (
-        <button > 
+        <Button onClick={onClickFavorite}> 
             {Favorited ? "Not Favorite" : "Add to Favorite"} {FavoriteNumber}
-        </button>
+        </Button>
     )
 }
 
