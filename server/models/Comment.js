@@ -21,4 +21,4 @@ const CommentSchema = Schema({
 
 const Comment = mongoose.model('Commnet', CommentSchema);
 
-module.exports = { Favorite: Comment }
+module.exports = { Comment }

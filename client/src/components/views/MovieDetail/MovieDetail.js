@@ -13,6 +13,8 @@ function MovieDetail(props) {
     const [Movie, setMovie] = useState([])
     const [Actor, setActor] = useState([])
     const [ActorToggle, setActorToggle] = useState(null)
+    const [CommentList, setCommentList] = useState([])
+
     let movieId = props.match.params.movieId;
 
     useEffect(() => {
@@ -40,6 +42,11 @@ function MovieDetail(props) {
     const handleToggleBtn = () => {
         // console.log(ActorToggle);
         setActorToggle(!ActorToggle)
+    }
+
+    const updateComment = (newComment) => {
+        // setCommentLists(...CommentLists, newComment)
+        setCommentList(CommentList.concat(newComment))
     }
 
     return (
@@ -87,7 +94,11 @@ function MovieDetail(props) {
 
                 }
 
-                <Comments></Comments>
+                <Comments 
+                    CommentList={CommentList}
+                    postId={Movie._id} 
+                    refreshFunction={updateComment}
+                />
             </div>
 
         </div>
