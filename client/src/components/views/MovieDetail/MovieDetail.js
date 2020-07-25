@@ -5,7 +5,8 @@ import MovieInfo from './Sections/MovieInfo';
 import {Row} from 'antd';
 import { FaGripHorizontal } from 'react-icons/fa';
 import GridCards from '../commons/GridCards';
-import Favorite from './Sections/Favorite'
+import Favorite from './Sections/Favorite';
+import Comments from './Sections/Comments';
 
 function MovieDetail(props) {
 
@@ -85,7 +86,10 @@ function MovieDetail(props) {
                 </Row>
 
                 }
-                            </div>
+
+                <Comments></Comments>
+            </div>
+
         </div>
     )
 }
