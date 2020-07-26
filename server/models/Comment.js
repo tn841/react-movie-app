@@ -7,13 +7,13 @@ const CommentSchema = Schema({
         ref: 'User'
     },
     postId: {
-        type:Schema.Types.ObjectId,
+        type: String,
     },
     responseTo: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    contnet: {
+    content: {
         type: String
     }
 }, {timestamps: true})
