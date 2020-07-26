@@ -50,7 +50,7 @@ function Comments(props) {
                     <React.Fragment>
                         <SingleComment
                             comment={comment}
-                            postiId={props.postId}
+                            postId={props.postId}
                             refreshFunction={props.refreshFunction}
                         />
                     </React.Fragment>

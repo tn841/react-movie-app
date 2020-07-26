@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { API_URL, API_KEY, IMAGE_BASE_URL } from '../../Config';
 import MainImage from '../LandingPage/Sections/MainImage';
 import MovieInfo from './Sections/MovieInfo';
-import {Row} from 'antd';
+import {Row, Button} from 'antd';
 import { FaGripHorizontal } from 'react-icons/fa';
 import GridCards from '../commons/GridCards';
 import Favorite from './Sections/Favorite';
@@ -59,6 +59,7 @@ function MovieDetail(props) {
 
     const updateComment = (newComment) => {
         // setCommentLists(...CommentLists, newComment)
+        console.log('updateComment : '+newComment)
         setCommentList(CommentList.concat(newComment))
     }
 
@@ -88,7 +89,7 @@ function MovieDetail(props) {
 
                 {/* Actors Grid */}
                 <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem'}}>
-                    <button onClick={handleToggleBtn}> Toggle Actor View</button>
+                    <Button onClick={handleToggleBtn}> Toggle Actor View</Button>
                 </div>
 
                 {ActorToggle &&

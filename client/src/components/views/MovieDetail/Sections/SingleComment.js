@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { Comment, Avatar, Button, Input} from 'antd'
+import Axios from 'axios';
+import {useSelector} from 'react-redux';
 const {TextArea} = Input;
 
 function SingleComment(props) {
+    const user = useSelector(state => state.user)
     const [CommentValue, setComment] = useState("")
     const [OpenReply, setOpenReply] = useState(false)
 
@@ -16,7 +19,23 @@ function SingleComment(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        
+        const params = {
+            writer: user.userData._id,
+            postId: props.postId,
+            responseTo: props.comment._id,
+            content: CommentValue
+        }
+        Axios.post('/api/comment/saveComment', params)
+        .then(res => {
+            if(res.data.success) {
+                console.log(res.data.doc)
+                setComment("");
+                setOpenReply(!OpenReply)
+                props.refreshFunction(res.data.doc)
+            } else {
+                alert('fail to save Comment.')
+            }
+        })
     }
 
     const action = [
@@ -48,7 +67,7 @@ function SingleComment(props) {
                     />
                     <br/>
                     <Button style={{width:"20%", height: '52px'}} 
-                        onClick>
+                        onClick={handleSubmit}>
                         Submit
                     </Button>
                 </form>
