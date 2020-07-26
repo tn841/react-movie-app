@@ -7,6 +7,7 @@ import { FaGripHorizontal } from 'react-icons/fa';
 import GridCards from '../commons/GridCards';
 import Favorite from './Sections/Favorite';
 import Comments from './Sections/Comments';
+import Axios from 'axios';
 
 function MovieDetail(props) {
 
@@ -36,6 +37,18 @@ function MovieDetail(props) {
         })
 
         setActorToggle(false);
+
+        Axios.post('/api/comment/getComment', {
+            userFrom : localStorage.getItem('userId'),
+            postId : movieId
+        }).then( (res) => {
+            if(res.data.success) {
+                setCommentList(CommentList.concat(res.data.doc))
+            } else {
+                console.log(res.data)
+                alert("fail to load Comments.")
+            }            
+        })
         
     }, [])
 
@@ -96,7 +109,7 @@ function MovieDetail(props) {
 
                 <Comments 
                     CommentList={CommentList}
-                    postId={Movie._id} 
+                    postId={Movie.id} 
                     refreshFunction={updateComment}
                 />
             </div>

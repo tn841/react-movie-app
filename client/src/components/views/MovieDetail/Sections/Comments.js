@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import {Button, Input} from 'antd';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
+import SingleComment from './SingleComment'
 
 const {TextArea} = Input;
 
@@ -16,6 +17,9 @@ function Comments(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        console.log("props.postId : " + props.postId)
+
         const params = {
             content: Comment,
             writer: user.userData._id,
@@ -40,6 +44,18 @@ function Comments(props) {
             
             {/* Comment Lists */}
             {console.log(props.CommentList) }
+
+            {props.CommentList && props.CommentList.map((comment, index) => (
+                (!comment.responseTo &&
+                    <React.Fragment>
+                        <SingleComment
+                            comment={comment}
+                            postiId={props.postId}
+                            refreshFunction={props.refreshFunction}
+                        />
+                    </React.Fragment>
+                )
+            ))}
 
             {/* Root Comment Fomr */}
             <form style={{display: 'flex'}} onSubmit={handleSubmit}>

@@ -18,4 +18,13 @@ router.post('/saveComment', (req, res) => {
     })
 });
 
+router.post('/getComment', (req, res) => {
+    Comment.find({"postId": req.body.postId})
+    .populate("writer")
+    .exec( (err, doc) => {
+        if(err) return res.status(400).json({success:false, err})
+        return res.status(200).json({success: true, doc})
+    })
+});
+
 module.exports = router;
