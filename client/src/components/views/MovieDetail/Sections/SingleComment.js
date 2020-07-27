@@ -63,7 +63,7 @@ function SingleComment(props) {
                         style={{ width:'100%', borderRadius: '5px'}}
                         onChange={handleChange}
                         value={CommentValue}
-                        placeHolder="write some comments"
+                        placeholder="write some comments"
                     />
                     <br/>
                     <Button style={{width:"20%", height: '52px'}} 
