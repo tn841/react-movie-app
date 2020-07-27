@@ -18,6 +18,10 @@ function Comments(props) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        if(user.userData && !user.userData.isAuth){
+            return alert('Please Login First.')
+        }
+
         console.log("props.postId : " + props.postId)
 
         const params = {

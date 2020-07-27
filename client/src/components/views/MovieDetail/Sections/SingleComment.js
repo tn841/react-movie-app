@@ -6,11 +6,11 @@ const {TextArea} = Input;
 
 function SingleComment(props) {
     const user = useSelector(state => state.user)
-    const [CommentValue, setComment] = useState("")
+    const [CommentValue, setCommentValue] = useState("")
     const [OpenReply, setOpenReply] = useState(false)
 
     const handleChange = (e) => {
-        setComment(e.currentTarget.value);
+        setCommentValue(e.currentTarget.value);
     }
 
     const openReply = () => {
@@ -28,10 +28,10 @@ function SingleComment(props) {
         Axios.post('/api/comment/saveComment', params)
         .then(res => {
             if(res.data.success) {
-                console.log(res.data.doc)
-                setComment("");
+                console.log(res.data.data)
+                setCommentValue("");
                 setOpenReply(!OpenReply)
-                props.refreshFunction(res.data.doc)
+                props.refreshFunction(res.data.data)
             } else {
                 alert('fail to save Comment.')
             }
