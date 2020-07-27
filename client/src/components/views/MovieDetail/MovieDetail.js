@@ -45,6 +45,7 @@ function MovieDetail(props) {
             if(res.data.success) {
                 setCommentList(CommentList.concat(res.data.doc))
             } else {
+                console.log(res.data)
                 alert("fail to load Comments.")
             }            
         })
